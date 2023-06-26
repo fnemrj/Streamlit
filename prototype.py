@@ -19,8 +19,9 @@ def load_model(path, device):
     model_.to(device)
     return model_
 
-cfg_model_path = 'https://github.com/fnemrj/Streamlit/releases/download/weights/best.pt' # 미리 학습시킨 best 가중치 포함된 파일
+# cfg_model_path = 'https://github.com/fnemrj/Streamlit/releases/download/weights/best.pt' # 미리 학습시킨 best 가중치 포함된 파일
 # cfg_model_path = 'best.pt' # 미리 학습시킨 best 가중치 포함된 파일
+cfg_model_path = 'yolov5s.pt' # 미리 학습시킨 best 가중치 포함된 파일
 model = None
 confidence = .25
 device_option = 'cpu'
