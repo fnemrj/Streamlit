@@ -1,17 +1,6 @@
-/home/appuser/venv/bin/python -m pip install --upgrade pip
-
 # Base ----------------------------------------
-pip>=23.1.2
 matplotlib>=3.7.1
 numpy>=1.24.3
-opencv-python>=4.7.0.72
 pandas>=2.0.2
-plost>=0.2.5
-psutil>=5.9.0
-pytorch<=2.0.1
-python<=3.11.3
 seaborn>=0.12.2
 streamlit>=1.23.1
-streamlit-elements>=0.1.0
-torchvision>=0.15.2
-ultralytics>=8.0.121
