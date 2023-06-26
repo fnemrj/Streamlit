@@ -16,3 +16,5 @@ protobuf<=4.23.3
 ipython>=8.14.0
 thop
 opencv-python-headless
+plost>=0.2.5
+streamlit-elements>=0.1.0
