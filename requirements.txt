@@ -18,4 +18,4 @@ thop
 opencv-python-headless
 plost>=0.2.5
 streamlit-elements>=0.1.0
-ultralytics>=8.0.121
+# ultralytics>=8.0.121
