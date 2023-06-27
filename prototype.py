@@ -44,9 +44,9 @@ def video_input(data_src):
     elif data_src == '제천지사':
         vid_file = "제천지사.mp4"
     elif data_src == '수원지사':
-        vid_file = "수원지사.mp4"
+        vid_file = "인천지사.mp4"
     elif data_src == '창원지사':
-        vid_file = "창원지사.mp4"
+        vid_file = "인천지사.mp4"
     else:
         vid_file = "인천지사.mp4"
  
