@@ -44,9 +44,9 @@ def video_input(data_src):
     elif data_src == '제천지사':
         vid_file = "제천지사.mp4"
     elif data_src == '수원지사':
-        vid_file = "인천지사.mp4"
+        vid_file = "https://github.com/fnemrj/Streamlit/releases/download/video/suwon.mp4"
     elif data_src == '창원지사':
-        vid_file = "인천지사.mp4"
+        vid_file = "https://github.com/fnemrj/Streamlit/releases/download/video/changwon.mp4"
     else:
         vid_file = "인천지사.mp4"
  
@@ -185,6 +185,9 @@ if page == "단속 대시보드":
 
 #################### Detect Log ####################    
 elif page == '불법차량 기록지':
+    # Slider date
+    slider_date = st.sidebar.slider("기간", tab2_min_date, tab2_max_date, value=(tab2_min_date, tab2_max_date))
+    
     st.title(page)
     st.markdown("#### 최근 단속 차량")
     
@@ -201,8 +204,6 @@ elif page == '불법차량 기록지':
     
     tab2_min_date = datetime.datetime.strptime(dispatch_data['일별'][0], "%Y-%m-%d")
     tab2_max_date = datetime.datetime.strptime(dispatch_data['일별'][max_row], "%Y-%m-%d")
-    
-    slider_date = st.slider("기간", tab2_min_date, tab2_max_date, value=(tab2_min_date, tab2_max_date))
     
     dispatch_data['일별'] = pd.to_datetime(dispatch_data['일시'])
     dispatch_data = dispatch_data[(dispatch_data['일별'] >= slider_date[0]) & (dispatch_data['일별'] <= slider_date[-1] + datetime.timedelta(days=1))]
