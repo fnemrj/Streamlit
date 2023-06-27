@@ -185,11 +185,6 @@ if page == "단속 대시보드":
 
 #################### Detect Log ####################    
 elif page == '불법차량 기록지':
-    tab2_min_date = datetime.datetime.strptime(dispatch_data['일별'][0], "%Y-%m-%d")
-    tab2_max_date = datetime.datetime.strptime(dispatch_data['일별'][max_row], "%Y-%m-%d")
-
-    # Slider date
-    slider_date = st.sidebar.slider("기간", tab2_min_date, tab2_max_date, value=(tab2_min_date, tab2_max_date))
     
     st.title(page)
     st.markdown("#### 최근 단속 차량")
@@ -204,7 +199,13 @@ elif page == '불법차량 기록지':
     max_row = dispatch_data.shape[0] - 1
     
     dispatch_data['일별'] = pd.to_datetime(dispatch_data['일시']).dt.strftime("%Y-%m-%d")
-    
+
+    tab2_min_date = datetime.datetime.strptime(dispatch_data['일별'][0], "%Y-%m-%d")
+    tab2_max_date = datetime.datetime.strptime(dispatch_data['일별'][max_row], "%Y-%m-%d")
+
+    # Slider date
+    slider_date = st.sidebar.slider("기간", tab2_min_date, tab2_max_date, value=(tab2_min_date, tab2_max_date))
+
     dispatch_data['일별'] = pd.to_datetime(dispatch_data['일시'])
     dispatch_data = dispatch_data[(dispatch_data['일별'] >= slider_date[0]) & (dispatch_data['일별'] <= slider_date[-1] + datetime.timedelta(days=1))]
     dispatch_data = dispatch_data[['일시', '단속 영업소', '검측번호', '차량 번호', '차종', '단속여부', '세부사항', '속도', '차로번호']]
