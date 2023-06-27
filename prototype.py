@@ -20,15 +20,14 @@ def load_model(path, device):
     return model_
 
 cfg_model_path = 'https://github.com/fnemrj/Streamlit/releases/download/weights/best.pt' # 미리 학습시킨 best 가중치 포함된 파일
-# cfg_model_path = 'best.pt' # 미리 학습시킨 best 가중치 포함된 파일
 model = None
 confidence = .25
 device_option = 'cpu'
 model = load_model(cfg_model_path, device_option)
 
 #################### Load Data ####################
-fake = pd.read_csv('가상데이터.csv', encoding="cp949") # 불법차량 기록지, 통계 시각화 위한 가상데이터
-data = pd.read_csv('tab3_data.csv', encoding='utf-8') # 통계 시각화 위한 가상데이터(본부명, 지사명 정보 포함)
+fake = pd.read_csv('data/가상데이터.csv', encoding="cp949") # 불법차량 기록지, 단속 관련 통계 위한 가상데이터
+data = pd.read_csv('data/tab3_data.csv', encoding='utf-8') # 단속 관련 통계 위한 가상데이터(본부명, 지사명 정보 포함)
 
 #################### Load Video ####################
 def video_input(data_src):
@@ -40,15 +39,15 @@ def video_input(data_src):
     
     # 영상 경로 설정, 일단 TOP5 지사를 선택
     if data_src == '진천지사':
-        vid_file = "진천지사.mp4"
+        vid_file = "data/진천지사.mp4"
     elif data_src == '제천지사':
-        vid_file = "제천지사.mp4"
+        vid_file = "data/제천지사.mp4"
     elif data_src == '수원지사':
         vid_file = "https://github.com/fnemrj/Streamlit/releases/download/video/suwon.mp4"
     elif data_src == '창원지사':
         vid_file = "https://github.com/fnemrj/Streamlit/releases/download/video/changwon.mp4"
     else:
-        vid_file = "인천지사.mp4"
+        vid_file = "data/인천지사.mp4"
  
     if vid_file:
         col1, col2, col3 = st.columns([0.25, 0.6, 0.2])
@@ -86,7 +85,7 @@ def video_input(data_src):
             st.markdown("#### 단속시간")
             col24_text = st.markdown(f"{now_sec}")
             
-        # Updating System stats
+        # System stats 구성
         col31, col32, col33 = st.columns([0.25, 0.2, 0.6])
         with col32:
             st.markdown("#### System Stats")
@@ -154,7 +153,7 @@ def get_gpu_memory():
 #################### Sidebar Setting ####################
 st.set_page_config(layout="wide")
 
-pages = ['단속 대시보드', '불법차량 기록지', '통계 시각화']
+pages = ['단속 대시보드', '불법차량 기록지', '단속 관련 통계']
 page = st.sidebar.selectbox("Select Tabs", options=pages)
 
 jisa = ['진천지사', '제천지사', '수원지사', '창원지사', '인천지사']
@@ -189,10 +188,10 @@ elif page == '불법차량 기록지':
     st.title(page)
     st.markdown("#### 최근 단속 차량")
     
-    # dispatch_data를 가상데이터 중 단속된 부분만 사용
+    # 가상데이터 중 단속 부분만 dispatch_data로 사용
     dispatch_data = fake[fake['단속여부'] == '단속']
     
-    # 단속 중 검측된 번호를 부여(통과된 순번을 의미함)
+    # 단속 중 검측된 번호를 부여(통과된 순번을 의미)
     dispatch_data.index.name = '검측번호'
     dispatch_data.reset_index(inplace=True)
     
@@ -213,9 +212,10 @@ elif page == '불법차량 기록지':
     
     last_car_num = dispatch_data.shape[0] - 1
 
+    # 불법차량 기록지 구성
     col210, col211, col212 = st.columns([0.2, 0.15, 0.15])
     with col210:
-        st.image('Group.png', width=380)
+        st.image('data/Group.png', width=380)
     
     with col211:
         col220, col221 = st.columns([0.25, 0.25])
@@ -473,7 +473,6 @@ else:
         max_month = (slider_date[-1].year - min_date.year) * 12 + (slider_date[-1].month - min_date.month) + 1
     month_list_df = fake[(fake['월별'] >= min_month) & (fake['월별'] <= max_month)]
 
-    st.markdown("###### 일별/주별/월별 단속 건수")
     group_day = day_list_df.groupby(by=['단속 영업소', '일별'], as_index=False)[['단속여부']].sum()
     group_day = group_day.rename(columns={'단속여부':'단속건수'})
 
@@ -484,6 +483,7 @@ else:
     group_month = group_month.rename(columns={'단속여부':'단속건수'})
 
     ## 영업소 입력하면 metric 및 일별/주별/월별 통계 출력
+    st.markdown("###### 일별/주별/월별 단속 건수")
     col330, col331, col332 = st.columns([0.2, 0.2, 0.2])
     if text:
         with col330: 
