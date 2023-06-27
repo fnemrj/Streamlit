@@ -213,7 +213,7 @@ elif page == '불법차량 기록지':
 
     col210, col211, col212 = st.columns([0.2, 0.15, 0.15])
     with col210:
-        st.image('Group.PNG', width=380)
+        st.image('Group.png', width=380)
     
     with col211:
         col220, col221 = st.columns([0.25, 0.25])
