@@ -38,16 +38,16 @@ def video_input(data_src):
     vid_file = None
     
     # 영상 경로 설정, 일단 TOP5 지사를 선택
-    if data_src == '진천지사':
-        vid_file = "data/진천지사.mp4"
-    elif data_src == '제천지사':
-        vid_file = "data/제천지사.mp4"
-    elif data_src == '수원지사':
-        vid_file = "https://github.com/fnemrj/Streamlit/releases/download/video/suwon.mp4"
-    elif data_src == '창원지사':
-        vid_file = "https://github.com/fnemrj/Streamlit/releases/download/video/changwon.mp4"
+    if data_src == '일죽영업소':
+        vid_file = "data/일죽영업소.mp4"
+    elif data_src == '서울영업소':
+        vid_file = "data/서울영업소.mp4"
+    elif data_src == '김포영업소':
+        vid_file = "https://github.com/fnemrj/Streamlit/releases/download/video/gimpo.mp4"
+    elif data_src == '대동영업소':
+        vid_file = "https://github.com/fnemrj/Streamlit/releases/download/video/daedong.mp4"
     else:
-        vid_file = "data/인천지사.mp4"
+        vid_file = "data/기타영업소.mp4"
  
     if vid_file:
         col1, col2, col3 = st.columns([0.25, 0.6, 0.2])
@@ -156,7 +156,7 @@ st.set_page_config(layout="wide")
 pages = ['단속 대시보드', '불법차량 기록지', '단속 관련 통계']
 page = st.sidebar.selectbox("Select Tabs", options=pages)
 
-jisa = ['진천지사', '제천지사', '수원지사', '창원지사', '인천지사']
+place = ['일죽영업소', '서울영업소', '김포영업소', '대동영업소', '북단양영업소', '서서울영업소', '서청주영업소', '오창영업소', '제천영업소', '증평영업소']
 
 #################### DashBoard ####################
 if page == "단속 대시보드":
@@ -165,10 +165,10 @@ if page == "단속 대시보드":
         st.title(page)
         
     # Input src option
-    data_src = st.sidebar.selectbox("단속 영업소를 선택하세요: ", jisa)
+    data_src = st.sidebar.selectbox("단속 영업소를 선택하세요: ", place)
     
     # Confidence slider
-    confidence = st.sidebar.slider('Confidence', min_value=0.1, max_value=1.0, value=.7)
+    confidence = st.sidebar.slider('Confidence', min_value=0.1, max_value=1.0, value=.5)
     
     # Custom classes
     if st.sidebar.checkbox("Custom Classes"):
@@ -250,7 +250,7 @@ elif page == '불법차량 기록지':
                 st.write("YES")
 
     st.markdown("#### 불법차량 로그")
-    st.dataframe(dispatch_data, width=950)
+    st.dataframe(dispatch_data, width=1400)
 
 #################### Plotting ####################
 else:
